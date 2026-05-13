@@ -64,7 +64,7 @@ export default function Step4DataPegawai({ formData, setFormData }) {
                     </div>
                 </div>
 
-                {/* Baris 2: NIP & Unit Kerja (Grid 2 Kolom) */}
+                {/* Baris 2: NIP & Pekerjaan(Grid 2 Kolom) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-[#0B1171]">
@@ -81,9 +81,7 @@ export default function Step4DataPegawai({ formData, setFormData }) {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label className="text-sm font-bold text-[#0B1171]">
-                            Unit Kerja (Divisi / Sekolah / Instansi)
-                        </label>
+                        <label className="text-sm font-bold text-[#0B1171]">Unit Kerja (Divisi / Sekolah / Instansi)</label>
                         <input
                             type="text"
                             name="unit_kerja"

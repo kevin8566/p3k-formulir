@@ -1,9 +1,20 @@
 import React from 'react';
 
 export default function Step5Pendapatan({ formData, setFormData }) {
-    const handleChange = (e) => {
+
+    // Handler khusus untuk input nominal mata uang (Hanya simpan angka murni ke state)
+    const handleCurrencyChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        // Menghapus semua karakter selain angka (0-9)
+        const rawValue = value.replace(/\D/g, '');
+        setFormData({ ...formData, [name]: rawValue });
+    };
+
+    // Fungsi untuk memformat angka murni menjadi format ribuan dengan titik
+    const formatRupiah = (angka) => {
+        if (!angka) return '';
+        // Menggunakan standar format Indonesia (titik sebagai pemisah ribuan)
+        return new Intl.NumberFormat('id-ID').format(angka);
     };
 
     return (
@@ -23,38 +34,38 @@ export default function Step5Pendapatan({ formData, setFormData }) {
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-bold text-[#0B1171]">Pendapatan Tetap per Bulan</label>
                     <span className="text-xs text-gray-500 -mt-1 mb-1">Gaji pokok (termasuk tunjangan tetap PPPK)</span>
-                    <select
-                        name="pendapatan_tetap"
-                        value={formData.pendapatan_tetap || ''}
-                        onChange={handleChange}
-                        className="w-full border border-gray-200 rounded-lg px-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none text-gray-700 text-sm bg-white transition-all shadow-sm"
-                    >
-                        <option value="" disabled>Pilih estimasi pendapatan tetap</option>
-                        <option value="< Rp3.000.000">&lt; Rp 3.000.000</option>
-                        <option value="Rp3.000.000 - Rp4.000.000">Rp 3.000.000 - Rp 4.000.000</option>
-                        <option value="Rp4.000.000 - Rp5.000.000">Rp 4.000.000 - Rp 5.000.000</option>
-                        <option value="Rp5.000.000 - Rp6.000.000">Rp 5.000.000 - Rp 6.000.000</option>
-                        <option value="> Rp6.000.000">&gt; Rp 6.000.000</option>
-                    </select>
+                    <div className="relative">
+                        <span className="absolute left-4 top-3.5 text-gray-600 font-bold">Rp</span>
+                        <input
+                            type="text"
+                            name="pendapatan_tetap"
+                            // Tampilan visual format ribuan
+                            value={formatRupiah(formData.pendapatan_tetap)}
+                            // Logika simpan murni angka
+                            onChange={handleCurrencyChange}
+                            placeholder="Contoh: 4.500.000"
+                            className="w-full border border-gray-200 rounded-lg pl-12 pr-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none transition-all placeholder-gray-400 text-sm bg-white"
+                        />
+                    </div>
                 </div>
 
                 {/* Kolom 2: Pendapatan Tidak Tetap */}
                 <div className="flex flex-col gap-2">
                     <label className="text-sm font-bold text-[#0B1171]">Pendapatan Tidak Tetap per Bulan</label>
                     <span className="text-xs text-gray-500 -mt-1 mb-1">Honor tambahan, lembur, atau usaha sampingan</span>
-                    <select
-                        name="pendapatan_tidak_tetap"
-                        value={formData.pendapatan_tidak_tetap || ''}
-                        onChange={handleChange}
-                        className="w-full border border-gray-200 rounded-lg px-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none text-gray-700 text-sm bg-white transition-all shadow-sm"
-                    >
-                        <option value="" disabled>Pilih estimasi pendapatan tidak tetap</option>
-                        <option value="< Rp500.000">&lt; Rp 500.000</option>
-                        <option value="Rp500.000 - Rp1.000.000">Rp 500.000 - Rp 1.000.000</option>
-                        <option value="Rp1.000.000 - Rp1.500.000">Rp 1.000.000 - Rp 1.500.000</option>
-                        <option value="Rp1.500.000 - Rp2.000.000">Rp 1.500.000 - Rp 2.000.000</option>
-                        <option value="> Rp2.000.000">&gt; Rp 2.000.000</option>
-                    </select>
+                    <div className="relative">
+                        <span className="absolute left-4 top-3.5 text-gray-600 font-bold">Rp</span>
+                        <input
+                            type="text"
+                            name="pendapatan_tidak_tetap"
+                            // Tampilan visual format ribuan
+                            value={formatRupiah(formData.pendapatan_tidak_tetap)}
+                            // Logika simpan murni angka
+                            onChange={handleCurrencyChange}
+                            placeholder="Contoh: 1.000.000"
+                            className="w-full border border-gray-200 rounded-lg pl-12 pr-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none transition-all placeholder-gray-400 text-sm bg-white"
+                        />
+                    </div>
                 </div>
 
             </div>

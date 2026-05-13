@@ -32,7 +32,7 @@ export default function Step6PengajuanKredit({ formData, setFormData }) {
                 </p>
             </div>
 
-            {/* Form Inputs (Grid 2 Kolom) */}
+            {/* Form Inputs (Grid) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
 
                 {/* Kolom 1: Nominal Kredit (Dilengkapi Auto-Format Ribuan) */}
@@ -70,6 +70,19 @@ export default function Step6PengajuanKredit({ formData, setFormData }) {
                         <option value="60">60 Bulan (5 Tahun)</option>
                         <option value="72">72 Bulan (6 Tahun)</option>
                     </select>
+                </div>
+
+                {/* REVISI: Kolom 3: Tujuan Penggunaan Kredit (Full Width / md:col-span-2) */}
+                <div className="flex flex-col gap-2 md:col-span-2">
+                    <label className="text-sm font-bold text-[#0B1171]">Tujuan Penggunaan Kredit</label>
+                    <textarea
+                        name="penggunaan_kredit"
+                        value={formData.penggunaan_kredit || ''}
+                        onChange={handleChange}
+                        rows="3"
+                        placeholder="Contoh: Renovasi rumah, biaya pendidikan anak, modal usaha, dll."
+                        className="w-full border border-gray-200 rounded-lg px-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none transition-all placeholder-gray-400 text-sm resize-none"
+                    ></textarea>
                 </div>
 
             </div>

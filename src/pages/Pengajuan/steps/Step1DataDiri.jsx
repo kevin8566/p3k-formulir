@@ -15,6 +15,7 @@ export default function Step1DataDiri({ formData, setFormData }) {
                 </div>
 
                 <div className="space-y-6">
+                    {/* Baris 1 */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-bold text-[#0B1171]">Nama Lengkap</label>
@@ -32,6 +33,7 @@ export default function Step1DataDiri({ formData, setFormData }) {
                         </div>
                     </div>
 
+                    {/* Baris 2 */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-bold text-[#0B1171]">Kode Pos</label>
@@ -47,10 +49,11 @@ export default function Step1DataDiri({ formData, setFormData }) {
                         </div>
                     </div>
 
+                    {/* Baris 3 */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-bold text-[#0B1171]">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" value={formData.jenis_kelamin} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm">
+                            <select name="jenis_kelamin" value={formData.jenis_kelamin} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm bg-white">
                                 <option value="">Pilih jenis kelamin</option>
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
@@ -60,13 +63,17 @@ export default function Step1DataDiri({ formData, setFormData }) {
                             <label className="text-sm font-bold text-[#0B1171]">NIK</label>
                             <input type="number" name="nik" value={formData.nik} onChange={handleChange} placeholder="NIK (16 digit)" className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-sm" />
                         </div>
+                        {/* REVISI: Kolom Agama diganti menjadi Nama Ibu Kandung */}
                         <div className="flex flex-col gap-2">
-                            <label className="text-sm font-bold text-[#0B1171]">Agama</label>
-                            <select name="agama" value={formData.agama} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm">
-                                <option value="">Pilih agama</option>
-                                <option value="Islam">Islam</option><option value="Kristen">Kristen</option>
-                                <option value="Katolik">Katolik</option><option value="Hindu">Hindu</option><option value="Budha">Budha</option>
-                            </select>
+                            <label className="text-sm font-bold text-[#0B1171]">Nama Ibu Kandung</label>
+                            <input
+                                type="text"
+                                name="nama_ibu"
+                                value={formData.nama_ibu || ''}
+                                onChange={handleChange}
+                                placeholder="Nama lengkap ibu kandung"
+                                className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-sm placeholder-gray-400"
+                            />
                         </div>
                     </div>
                 </div>
@@ -80,14 +87,14 @@ export default function Step1DataDiri({ formData, setFormData }) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-[#0B1171]">Status Rumah</label>
-                        <select name="status_rumah" value={formData.status_rumah} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm">
+                        <select name="status_rumah" value={formData.status_rumah} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm bg-white">
                             <option value="">Pilih status</option>
                             <option value="Milik Sendiri">Milik Sendiri</option><option value="Sewa">Sewa/Kontrak</option>
                         </select>
                     </div>
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-[#0B1171]">Status Pernikahan</label>
-                        <select name="status_pernikahan" value={formData.status_pernikahan} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm">
+                        <select name="status_pernikahan" value={formData.status_pernikahan} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm bg-white">
                             <option value="">Pilih status</option>
                             <option value="Belum Menikah">Belum Menikah</option><option value="Menikah">Menikah</option>
                         </select>
