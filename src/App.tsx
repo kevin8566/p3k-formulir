@@ -2,16 +2,19 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import AdminSidebar from './components/layout/AdminSidebar';
 import AdminTopbar from './components/layout/AdminTopbar';
 
-// Import Halaman
+// Import Halaman Utama
 import DashboardPage from './features/dashboard/pages/DashboardPage';
 import KrediturListPage from './features/kreditur/pages/KrediturListPage';
 import PengajuanPage from './features/pengajuan/pages/PengajuanPage';
 import MasterDataPage from './features/master-data/pages/MasterDataPage';
-import PengaturanPage from './features/pengaturan/pages/PengaturanPage';
 
 // Import Halaman Detail
 import KrediturDetailPage from './features/kreditur/pages/KrediturDetailPage';
 import PengajuanDetailPage from './features/pengajuan/pages/PengajuanDetailPage';
+
+// Import Halaman Auth
+import LoginPage from './features/auth/pages/LoginPage';
+import ForgotPasswordPage from './features/auth/pages/ForgotPasswordPage';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -33,8 +36,12 @@ function App() {
     return (
         <Router>
             <Routes>
+                {/* Auth Routes */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
                 {/* Redirect Root */}
-                <Route path="/" element={<Navigate to="/admin" replace />} />
+                <Route path="/" element={<Navigate to="/login" replace />} />
 
                 {/* Admin Routes */}
                 <Route path="/admin" element={
@@ -79,18 +86,12 @@ function App() {
                     </AdminLayout>
                 } />
 
-                {/* Pengaturan */}
-                <Route path="/admin/pengaturan" element={
-                    <AdminLayout>
-                        <PengaturanPage />
-                    </AdminLayout>
-                } />
+        
 
                 {/* Fallback */}
-                <Route path="*" element={<Navigate to="/admin" replace />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
         </Router>
     );
 }
-
 export default App;
