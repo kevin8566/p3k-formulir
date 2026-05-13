@@ -54,7 +54,7 @@ export default function Step4DataPegawai({ formData, setFormData }) {
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-[#0B1171]">NIP (18 Digit)</label>
                         <input
-                            type="number"
+                            type="text"
                             name="nip"
                             value={formData.nip || ''}
                             onChange={handleChange}
