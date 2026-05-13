@@ -45,19 +45,17 @@ export default function Step3DataOrangTerdekat({ formData, setFormData }) {
 
                 {/* Baris 3: Hubungan & No Telepon (Grid 2 Kolom) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* REVISI: Mengubah dropdown (select) menjadi input text manual */}
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-bold text-[#0B1171]">Hubungan</label>
-                        <select
+                        <input
+                            type="text"
                             name="hubungan_kerabat"
                             value={formData.hubungan_kerabat || ''}
                             onChange={handleChange}
-                            className="w-full border border-gray-200 rounded-lg px-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none text-gray-500 text-sm bg-white"
-                        >
-                            <option value="">Pilih hubungan</option>
-                            <option value="Orang Tua">Orang Tua</option>
-                            <option value="Saudara">Saudara</option>
-                            <option value="Kerabat Lain">Kerabat Lain</option>
-                        </select>
+                            placeholder="Contoh: Orang Tua, Kakak Kandung"
+                            className="w-full border border-gray-200 rounded-lg px-4 py-3.5 focus:border-[#0B1171] focus:ring-1 focus:ring-[#0B1171] outline-none transition-all placeholder-gray-400 text-sm"
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2">
