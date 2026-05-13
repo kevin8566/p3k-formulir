@@ -5,14 +5,14 @@ import Step1DataDiri from './steps/Step1DataDiri';
 import Step2DataSuamiIstri from './steps/Step2DataSuamiIstri';
 import Step3DataOrangTerdekat from './steps/Step3DataOrangTerdekat';
 import Step4DataPegawai from './steps/Step4DataPegawai';
-import Step5Pendapatan from './steps/Step5Pendapatan';
+// import Step5Pendapatan from './steps/Step5Pendapatan';
 import Step6PengajuanKredit from './steps/Step6PengajuanKredit';
 import Step7UploadBerkas from './steps/Step7UploadBerkas';
 
 // ==========================================
 // 1. DATA STATIS & KONFIGURASI GLOBAL
 // ==========================================
-const STEPS_LABEL = ["Data Diri", "Suami / Istri", "Kerabat", "Pegawai", "Pendapatan", "Kredit", "Berkas"];
+const STEPS_LABEL = ["Data Diri", "Suami / Istri", "Kerabat", "Pegawai", "Kredit", "Berkas"];
 
 const ANIMATIONS = {
     step: {
@@ -81,9 +81,9 @@ export default function FormPengajuan() {
             case 2: return <Step2DataSuamiIstri {...props} />;
             case 3: return <Step3DataOrangTerdekat {...props} />;
             case 4: return <Step4DataPegawai {...props} />;
-            case 5: return <Step5Pendapatan {...props} />;
-            case 6: return <Step6PengajuanKredit {...props} />;
-            case 7: return <Step7UploadBerkas {...props} />;
+            // case 5: return <Step5Pendapatan {...props} />;
+            case 5: return <Step6PengajuanKredit {...props} />;
+            case 6: return <Step7UploadBerkas {...props} />;
             default: return null;
         }
     };
@@ -98,14 +98,14 @@ export default function FormPengajuan() {
             <div className="max-w-6xl mx-auto px-6 mb-12">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
                     <div className="relative flex justify-between items-center w-full">
-                        <div className="absolute left-[2%] right-[2%] top-6 h-[2px] bg-gray-100 z-0">
+                        {/* <div className="absolute left-[2%] right-[2%] top-6 h-[2px] bg-gray-100 z-0">
                             <motion.div
                                 className="h-full bg-green-500 origin-left"
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: (step - 1) / (STEPS_LABEL.length - 1) }}
                                 transition={{ duration: 0.5 }}
                             />
-                        </div>
+                        </div> */}
                         {STEPS_LABEL.map((label, idx) => (
                             <div key={idx} className="flex flex-col items-center relative z-10 flex-1">
                                 <motion.div
@@ -181,7 +181,7 @@ export default function FormPengajuan() {
                                         ❮ Sebelumnya
                                     </button>
 
-                                    {step === 7 ? (
+                                    {step === 6 ? (
                                         <motion.button
                                             onClick={handleNext} disabled={!isReadyToSubmit || isSubmitting}
                                             animate={{ width: isSubmitting ? 56 : 240, borderRadius: isSubmitting ? 28 : 12 }}

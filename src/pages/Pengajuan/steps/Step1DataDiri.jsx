@@ -40,12 +40,12 @@ export default function Step1DataDiri({ formData, setFormData }) {
                             <input type="number" name="kode_pos" value={formData.kode_pos} onChange={handleChange} placeholder="57xxx" className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-sm" />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <label className="text-sm font-bold text-[#0B1171]">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" value={formData.tempat_lahir} onChange={handleChange} placeholder="Kota" className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-sm" />
+                            <label className="text-sm font-bold text-[#0B1171]">E-mail</label>
+                            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Masukkan e-mail anda" className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-sm" />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <label className="text-sm font-bold text-[#0B1171]">Tanggal Lahir</label>
-                            <input type="date" name="tgl_lahir" value={formData.tgl_lahir} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm" />
+                            <label className="text-sm font-bold text-[#0B1171]">No Telepon</label>
+                            <input type="text" name="no_telp" value={formData.no_telp} onChange={handleChange} className="w-full border border-gray-200 rounded-lg px-4 py-3.5 outline-none text-gray-500 text-sm" />
                         </div>
                     </div>
 
