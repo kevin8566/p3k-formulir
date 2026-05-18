@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// REVISI: Import disesuaikan dengan file yang baru digabung & di-rename
 import Step1DataDiri from './steps/Step1DataDiri';
 import Step2DataSuamiIstri from './steps/Step2DataSuamiIstri';
 import Step3DataOrangTerdekat from './steps/Step3DataOrangTerdekat';
-import Step4DataPegawai from './steps/Step4DataPegawai';
-import Step5Pendapatan from './steps/Step5Pendapatan';
-import Step6PengajuanKredit from './steps/Step6PengajuanKredit';
-import Step7UploadBerkas from './steps/Step7UploadBerkas';
+import Step4DataPegawaiPendapatan from './steps/Step4DataPegawaiPendapatan';
+import Step5PengajuanKredit from './steps/Step5PengajuanKredit';
+import Step6UploadBerkas from './steps/Step6UploadBerkas';
 import TemplateCetakF4 from './TemplateCetakF4';
 
-const STEPS_LABEL = ["Data Diri", "Suami / Istri", "Kerabat", "Pegawai", "Pendapatan", "Kredit", "Berkas"];
+// REVISI: Pagination sekarang menjadi 6 Langkah
+const STEPS_LABEL = ["Data Diri", "Suami / Istri", "Kerabat", "Pegawai & Pendapatan", "Kredit", "Berkas"];
 
 const ANIMATIONS = {
     step: {
@@ -47,7 +48,8 @@ export default function FormPengajuan() {
     const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
     const handleNext = () => {
-        if (step === 7) {
+        // REVISI: Batas akhir pengiriman sekarang di langkah 6
+        if (step === 6) {
             setIsSubmitting(true);
             setTimeout(() => {
                 setIsSubmitting(false);
@@ -67,16 +69,16 @@ export default function FormPengajuan() {
         setStep((prev) => prev - 1);
     };
 
+    // REVISI: Mapping render disesuaikan dengan 6 langkah
     const renderStep = () => {
         const props = { formData, setFormData };
         switch (step) {
             case 1: return <Step1DataDiri {...props} />;
             case 2: return <Step2DataSuamiIstri {...props} />;
             case 3: return <Step3DataOrangTerdekat {...props} />;
-            case 4: return <Step4DataPegawai {...props} />;
-            case 5: return <Step5Pendapatan {...props} />;
-            case 6: return <Step6PengajuanKredit {...props} />;
-            case 7: return <Step7UploadBerkas {...props} />;
+            case 4: return <Step4DataPegawaiPendapatan {...props} />;
+            case 5: return <Step5PengajuanKredit {...props} />;
+            case 6: return <Step6UploadBerkas {...props} />;
             default: return null;
         }
     };
@@ -84,8 +86,6 @@ export default function FormPengajuan() {
     const isReadyToSubmit = formData.setuju_pernyataan;
 
     return (
-        // PERBAIKAN PENTING: Membungkus seluruh UI di dalam satu div Fragment,
-        // lalu menyematkan print:hidden HANYA pada bungkus form UI.
         <>
             <div className="min-h-screen bg-[#F8FAFC] pb-24 pt-10 print:hidden">
 
@@ -122,7 +122,7 @@ export default function FormPengajuan() {
                 </div>
 
                 {/* FORM / SUCCESS STATE SECTION */}
-                <div className="max-w-6xl mx-auto px-6">
+                <div className="max-w-6xl mx-auto px-6 relative">
                     <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-gray-100 p-10 md:p-14 min-h-[550px] flex flex-col relative overflow-hidden">
 
                         <AnimatePresence mode="wait">
@@ -187,7 +187,8 @@ export default function FormPengajuan() {
                                             ❮ Sebelumnya
                                         </button>
 
-                                        {step === 7 ? (
+                                        {/* REVISI: Tombol kirim muncul di langkah ke-6 */}
+                                        {step === 6 ? (
                                             <motion.button
                                                 onClick={handleNext} disabled={!isReadyToSubmit || isSubmitting}
                                                 animate={{ width: isSubmitting ? 56 : 240, borderRadius: isSubmitting ? 28 : 12 }}
@@ -206,11 +207,12 @@ export default function FormPengajuan() {
                                 </motion.div>
                             )}
                         </AnimatePresence>
+
                     </div>
                 </div>
             </div>
 
-            {/* PERBAIKAN: Komponen cetak diletakkan di LUAR div pembungkus utama yang diberi print:hidden */}
+            {/* Template Cetak F4 tetap aman di luar */}
             <TemplateCetakF4 formData={formData} />
         </>
     );
