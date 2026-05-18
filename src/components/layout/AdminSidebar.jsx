@@ -150,7 +150,8 @@ export default function AdminSidebar() {
                     })}
                 </nav>
 
-               <p className="px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mt-10 mb-6 opacity-50">Pengaturan</p>
+
+              
                     <Link
                         to="/login"                   
                         onClick={() => {

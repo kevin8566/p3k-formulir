@@ -9,6 +9,9 @@ export const usePengajuanStore = create(
             updateStatus: (id, status) => set(state => ({
                 pengajuan: state.pengajuan.map(p => p.id === id ? { ...p, status } : p)
             })),
+            updatePengajuan: (id, data) => set(state => ({
+                pengajuan: state.pengajuan.map(p => p.id === id ? { ...p, ...data } : p)
+            })),
             deletePengajuan: (id) => set(state => ({
                 pengajuan: state.pengajuan.filter(p => p.id !== id)
             })),
