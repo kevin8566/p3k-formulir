@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// REVISI: Import disesuaikan dengan file yang baru digabung & di-rename
+// Penyesuaian struktur impor komponen yang telah digabung dan diubah namanya
 import Step1DataDiri from './steps/Step1DataDiri';
 import Step2DataSuamiIstri from './steps/Step2DataSuamiIstri';
 import Step3DataOrangTerdekat from './steps/Step3DataOrangTerdekat';
 import Step4DataPegawaiPendapatan from './steps/Step4DataPegawaiPendapatan';
 import Step5PengajuanKredit from './steps/Step5PengajuanKredit';
 import Step6UploadBerkas from './steps/Step6UploadBerkas';
+
 import TemplateCetakF4 from './TemplateCetakF4';
 
-// REVISI: Pagination sekarang menjadi 6 Langkah
+// Array label disesuaikan untuk 6 langkah formulir
 const STEPS_LABEL = ["Data Diri", "Suami / Istri", "Kerabat", "Pegawai & Pendapatan", "Kredit", "Berkas"];
 
 const ANIMATIONS = {
@@ -26,9 +27,9 @@ const ANIMATIONS = {
 };
 
 const INITIAL_FORM_DATA = {
-    nama: '', alamat: '', kode_pos: '', tempat_lahir: '', tgl_lahir: '',
-    jenis_kelamin: '', nik: '', agama: '', no_telp: '', email: '',
-    status_rumah: '', status_pernikahan: '', npwp: '', nama_ibu: '',
+    nama: '', alamat: '', kode_pos: '', email: '', no_telp: '',
+    jenis_kelamin: '', nik: '', nama_ibu: '',
+    status_rumah: '', status_pernikahan: '', npwp: '',
     is_belum_menikah: false,
     nama_pasangan: '', alamat_pasangan: '', telp_pasangan: '', nik_pasangan: '',
     nama_kerabat: '', alamat_kerabat: '', hubungan_kerabat: '', telp_kerabat: '',
@@ -48,7 +49,7 @@ export default function FormPengajuan() {
     const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
     const handleNext = () => {
-        // REVISI: Batas akhir pengiriman sekarang di langkah 6
+        // Validasi pengiriman data dipindahkan ke langkah 6
         if (step === 6) {
             setIsSubmitting(true);
             setTimeout(() => {
@@ -69,7 +70,6 @@ export default function FormPengajuan() {
         setStep((prev) => prev - 1);
     };
 
-    // REVISI: Mapping render disesuaikan dengan 6 langkah
     const renderStep = () => {
         const props = { formData, setFormData };
         switch (step) {
@@ -123,7 +123,7 @@ export default function FormPengajuan() {
 
                 {/* FORM / SUCCESS STATE SECTION */}
                 <div className="max-w-6xl mx-auto px-6 relative">
-                    <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-gray-100 p-10 md:p-14 min-h-[550px] flex flex-col relative overflow-hidden">
+                    <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-gray-100 p-8 md:p-14 min-h-[550px] flex flex-col relative overflow-hidden">
 
                         <AnimatePresence mode="wait">
                             {isSuccess ? (
@@ -165,7 +165,7 @@ export default function FormPengajuan() {
                                 </motion.div>
                             ) : (
                                 <motion.div key="form-content" className="flex-grow flex flex-col">
-                                    <h2 className="text-2xl font-black text-[#0B1171] uppercase tracking-wide mb-12">
+                                    <h2 className="text-xl md:text-2xl font-black text-[#0B1171] uppercase tracking-wide mb-8 md:mb-12">
                                         {step}. {STEPS_LABEL[step-1]}
                                     </h2>
 
@@ -182,28 +182,43 @@ export default function FormPengajuan() {
                                     </div>
 
                                     {/* NAVIGATION BUTTONS */}
-                                    <div className="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
-                                        <button onClick={handleBack} disabled={step === 1 || isSubmitting} className={`font-bold text-[#0B1171] flex items-center gap-2 ${step === 1 ? 'opacity-0 invisible' : ''}`}>
-                                            ❮ Sebelumnya
+                                    <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-gray-100 flex justify-between items-center gap-2 md:gap-4">
+
+                                        <button
+                                            onClick={handleBack}
+                                            disabled={step === 1 || isSubmitting}
+                                            className={`flex items-center justify-center gap-1 md:gap-2 px-3 py-3 md:px-6 md:py-4 rounded-xl font-bold text-gray-500 hover:bg-gray-100 hover:text-[#0B1171] transition-all text-[11px] md:text-sm uppercase tracking-wider active:scale-95 ${step === 1 ? 'opacity-0 invisible' : ''}`}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                            <span className="hidden sm:inline">Sebelumnya</span>
+                                            <span className="sm:hidden">Kembali</span>
                                         </button>
 
-                                        {/* REVISI: Tombol kirim muncul di langkah ke-6 */}
                                         {step === 6 ? (
                                             <motion.button
                                                 onClick={handleNext} disabled={!isReadyToSubmit || isSubmitting}
-                                                animate={{ width: isSubmitting ? 56 : 240, borderRadius: isSubmitting ? 28 : 12 }}
-                                                className={`h-14 flex items-center justify-center font-black shadow-xl uppercase tracking-widest overflow-hidden transition-colors ${isReadyToSubmit ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                                                animate={{ width: isSubmitting ? 48 : 'auto', borderRadius: isSubmitting ? 24 : 12 }}
+                                                className={`flex items-center justify-center font-black shadow-xl uppercase tracking-widest overflow-hidden transition-colors text-[11px] md:text-sm h-12 md:h-14 px-6 md:px-10 ${isReadyToSubmit ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                                             >
                                                 {isSubmitting ? (
-                                                    <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                                 ) : "Kirim Pengajuan"}
                                             </motion.button>
                                         ) : (
-                                            <button onClick={handleNext} className="bg-[#0B1171] text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest shadow-xl shadow-blue-900/20 active:scale-95 transition-all">
-                                                Selanjutnya ❯
+                                            <button
+                                                onClick={handleNext}
+                                                className="flex items-center justify-center gap-1 md:gap-2 bg-[#0B1171] text-white px-5 py-3 md:px-10 md:py-4 rounded-xl font-black text-[11px] md:text-sm uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:bg-[#070b4a] active:scale-95 transition-all"
+                                            >
+                                                Selanjutnya
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                                </svg>
                                             </button>
                                         )}
                                     </div>
+
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -212,7 +227,7 @@ export default function FormPengajuan() {
                 </div>
             </div>
 
-            {/* Template Cetak F4 tetap aman di luar */}
+            {/* Template Cetak F4 */}
             <TemplateCetakF4 formData={formData} />
         </>
     );
