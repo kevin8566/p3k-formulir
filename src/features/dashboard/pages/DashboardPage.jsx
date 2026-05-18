@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClipboardList, Database, UsersRound } from 'lucide-react';
+import { ClipboardList, Database } from 'lucide-react';
 import { useKrediturStore } from '../../kreditur/store/krediturStore';
 import { useMasterDataStore } from '../../master-data/store/masterDataStore';
 import DashboardBanner from '../components/DashboardBanner';
-import KrediturSummary from '../components/KrediturSummary';
+
 import QuickAccessPanel from '../components/QuickAccessPanel';
 import RecentPengajuanTable from '../components/RecentPengajuanTable';
 import StatCard from '../components/StatCard';
@@ -33,7 +33,7 @@ export default function DashboardPage() {
         <div className="dash-root space-y-5 p-6 min-h-screen" style={{ background: '#f1f4fb' }}>
             <DashboardBanner dateStr={dateStr} timeStr={timeStr} />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <StatCard
                     delay={0}
                     color="#8b5cf6"
@@ -45,15 +45,6 @@ export default function DashboardPage() {
                 />
                 <StatCard
                     delay={70}
-                    color="#10b981"
-                    sparkColor="#10b981"
-                    label="Kreditur Aktif"
-                    value={totalKreditur}
-                    sub="8.2% dari bulan lalu"
-                    icon={<UsersRound className="w-5 h-5" />}
-                />
-                <StatCard
-                    delay={140}
                     color="#f59e0b"
                     sparkColor="#f59e0b"
                     label="Data Master"
@@ -64,12 +55,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-                <div className="xl:col-span-2 space-y-5">
-                    <KrediturSummary
-                        totalKreditur={totalKreditur}
-                        totalDisetujui={totalDisetujui}
-                        totalDiproses={totalDiproses}
-                    />
+                <div className="xl:col-span-2">
                     <RecentPengajuanTable
                         pengajuan={RECENT_PENGAJUAN}
                         onViewAll={() => navigate('/admin/pengajuan')}
