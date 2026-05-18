@@ -57,7 +57,7 @@ export default function Footer() {
                             </div>
 
                             <div className="bg-white rounded-[12px] md:rounded-[16px] shadow-[0_4px_15px_rgba(0,0,0,0.1)] flex items-center justify-center w-[110px] h-[60px] sm:w-[140px] sm:h-[76px] p-2.5 sm:p-4 hover:-translate-y-1 transition-transform duration-300">
-                                <img src="/images/lps.png" alt="LPS" className="w-full h-full object-contain" />
+                                <img src="/images/lps1.png" alt="LPS" className="w-full h-full object-contain" />
                             </div>
 
                         </div>
