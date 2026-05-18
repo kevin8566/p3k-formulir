@@ -71,7 +71,7 @@ export default function Footer() {
                 {/* REVISI: Teks copyright disesuaikan ke 11px-13px */}
                 <div className="border-t border-white/20 pt-8 flex flex-col lg:flex-row justify-between items-center text-[11px] md:text-[13px] text-white/60 gap-4 text-center lg:text-left font-normal">
                     <p>© 2026 PT BPR Bank Karanganyar (Perseroda). All rights reserved.</p>
-                    <p className="tracking-wide">Sistem Layanan E-Formulir Digital.</p>
+                    <p className="tracking-wide">Sistem Layanan SIKREDIT PPPK.</p>
                 </div>
 
             </div>

@@ -1,13 +1,50 @@
 import React, { useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // ======================================================================
-// 1. DATA STATIS & KONFIGURASI ANIMASI (Di luar agar hemat memori render)
+// 1. DATA STATIS & KONFIGURASI ANIMASI
 // ======================================================================
-const FEATURES = [
-    { icon: '⚡', title: 'Proses Cepat', desc: 'Pinjaman tulus khusus PPPK dari Bank Karanganyar dengan SLA terukur.', borderColor: 'border-yellow-400' },
-    { icon: '📝', title: 'Formulir Adaptif', desc: 'Terintegrasi secara cerdas dengan dinas/instansi Anda, dikelola penuh oleh sistem Bank.', borderColor: 'border-blue-500' },
-    { icon: '🔍', title: 'Pelacakan Transparan', desc: 'Memonitor status pengajuan dokumen secara real-time seperti melacak resi pengiriman.', borderColor: 'border-green-500' },
+const CORE_VALUES = [
+    {
+        title: "Digitalisasi Tanpa Batas",
+        subtitle: "Paperless & Seamless",
+        desc: "Mulai dari pengisian data diri, informasi kepegawaian, hingga unggah dokumen pendukung (KTP, SK, Slip Gaji), seluruh alur dilakukan secara online. Sistem kami secara cerdas merangkum data tersebut menjadi dokumen PDF berstandar legal perbankan yang otomatis dan siap cetak.",
+        icon: (
+            <svg className="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+            </svg>
+        )
+    },
+    {
+        title: "Proses Cepat dengan SLA Terukur",
+        subtitle: "Efisiensi Waktu",
+        desc: "Waktu Anda sangat berharga. SiKredit memangkas waktu administratif sehingga tahapan verifikasi dan analisa oleh tim Bank Karanganyar dapat dilakukan jauh lebih cepat, akurat, dan efisien.",
+        icon: (
+            <svg className="w-7 h-7 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        )
+    },
+    {
+        title: "Notifikasi Hasil Otomatis",
+        subtitle: "Proactive Notification",
+        desc: "Anda tidak perlu repot bolak-balik menanyakan status. Setelah proses peninjauan oleh pihak bank selesai, sistem akan secara proaktif dan eksklusif mengirimkan informasi hasil persetujuan langsung ke nomor WhatsApp atau Email pribadi Anda yang terdaftar.",
+        icon: (
+            <svg className="w-7 h-7 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
+            </svg>
+        )
+    },
+    {
+        title: "Keamanan Data Tingkat Tinggi",
+        subtitle: "Privasi Nasabah",
+        desc: "Privasi nasabah adalah prioritas mutlak. Seluruh data dan dokumen yang masuk dienkripsi dan dikelola secara terpusat melalui Dashboard Admin internal Bank Karanganyar dengan standar keamanan perbankan yang ketat.",
+        icon: (
+            <svg className="w-7 h-7 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+        )
+    }
 ];
 
 const CONTACT_INFO = [
@@ -26,47 +63,7 @@ const TEXT_LINE_1 = "Solusi Kredit Cepat &".split(" ");
 const TEXT_LINE_3 = "Karanganyar.".split(" ");
 
 // ======================================================================
-// 2. KOMPONEN KARTU 3D INTERAKTIF
-// ======================================================================
-const TiltCard = ({ feature, idx }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        x.set((e.clientX - rect.left) / rect.width - 0.5);
-        y.set((e.clientY - rect.top) / rect.height - 0.5);
-    };
-
-    const handleMouseLeave = () => { x.set(0); y.set(0); };
-
-    return (
-        <motion.div
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 80, damping: 15, delay: idx * 0.1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className={`bg-white rounded-[16px] md:rounded-[24px] shadow-[0_4px_15px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] p-3 sm:p-4 md:p-10 border-b-[4px] md:border-b-[8px] ${feature.borderColor} flex flex-col text-left h-full cursor-pointer relative z-10`}
-        >
-            <motion.div style={{ transform: "translateZ(40px)" }} animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }} className="w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 mb-2 sm:mb-3 md:mb-6 bg-[#F8FAFC] rounded-lg md:rounded-2xl flex items-center justify-center text-sm sm:text-base md:text-3xl shadow-sm border border-gray-50 shrink-0">
-                {feature.icon}
-            </motion.div>
-            <motion.h3 style={{ transform: "translateZ(30px)" }} className="font-bold text-[10px] sm:text-xs md:text-xl text-[#152042] mb-1 md:mb-3 leading-tight tracking-tight">{feature.title}</motion.h3>
-            <motion.p style={{ transform: "translateZ(20px)" }} className="text-gray-500 text-[8px] sm:text-[10px] md:text-sm leading-tight md:leading-relaxed">{feature.desc}</motion.p>
-        </motion.div>
-    );
-};
-
-// ======================================================================
-// 3. KOMPONEN UTAMA (LANDING PAGE)
+// 2. KOMPONEN UTAMA (LANDING PAGE)
 // ======================================================================
 export default function LandingPage() {
     const { scrollY } = useScroll();
@@ -82,13 +79,10 @@ export default function LandingPage() {
         <div className="w-full font-sans bg-[#FAFAFA]">
 
             {/* HERO SECTION */}
-            <section className="relative w-full h-[520px] sm:h-[600px] md:h-[85vh] md:min-h-[550px] overflow-hidden bg-[#152042] group" id="home" onMouseMove={handleHeroMouseMove}>
-
-                {/* Efek Lampu Sorot Kursor (Spotlight) */}
+            <section className="relative w-full h-[520px] sm:h-[600px] md:h-[85vh] md:min-h-[550px] overflow-hidden bg-[#0B1171] group" id="home" onMouseMove={handleHeroMouseMove}>
                 <div className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 hidden md:block"
                      style={{ background: `radial-gradient(circle 400px at ${mousePos.x}px ${mousePos.y}px, rgba(255, 200, 0, 0.08), transparent 80%)` }} />
 
-                {/* Parallax Background */}
                 <motion.img
                     style={{ y: yBackground, willChange: "transform" }}
                     initial={{ scale: 1.1, opacity: 0 }}
@@ -98,13 +92,11 @@ export default function LandingPage() {
                     className="absolute inset-0 w-full h-full object-cover object-[85%_center] sm:object-[90%_center] md:object-right z-0"
                 />
 
-                <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#152042]/60 via-[#152042]/20 to-transparent md:w-[80%] pointer-events-none"></div>
+                <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0B1171]/80 via-[#0B1171]/40 to-transparent md:w-[80%] pointer-events-none"></div>
 
                 <div className="absolute inset-0 z-20 flex items-center pointer-events-none">
                     <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 w-full">
                         <div className="w-[75%] sm:w-[60%] md:w-1/2 flex flex-col items-start pointer-events-auto mt-10 md:mt-0">
-
-                            {/* Judul Animasi Per-kata */}
                             <motion.h1
                                 className="font-extrabold text-[#F3F4F6] mb-2 md:mb-4 leading-[1.15] tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] flex flex-wrap"
                                 style={{ fontSize: 'clamp(1.2rem, 4.5vw + 0.1rem, 3.5rem)' }}
@@ -133,7 +125,7 @@ export default function LandingPage() {
                             >
                                 <motion.a
                                     whileHover={{ scale: 1.05, y: -3, transition: { type: "spring", stiffness: 400 } }} whileTap={{ scale: 0.95 }}
-                                    href="/pengajuan" className="w-full min-[420px]:w-auto px-4 py-2.5 md:px-8 md:py-4 bg-[#FFC800] text-[#152042] font-extrabold rounded-[10px] md:rounded-xl shadow-[0_6px_15px_rgba(0,0,0,0.2)] flex items-center justify-center gap-1.5"
+                                    href="/pengajuan" className="w-full min-[420px]:w-auto px-4 py-2.5 md:px-8 md:py-4 bg-[#FFC800] text-[#0B1171] font-extrabold rounded-[10px] md:rounded-xl shadow-[0_6px_15px_rgba(0,0,0,0.2)] flex items-center justify-center gap-1.5"
                                     style={{ fontSize: 'clamp(0.7rem, 1.5vw + 0.2rem, 1.125rem)' }}
                                 >
                                     Ajukan Sekarang <span className="text-[#F53649]">⚡</span>
@@ -141,10 +133,10 @@ export default function LandingPage() {
 
                                 <motion.a
                                     whileHover={{ scale: 1.05, y: -3, backgroundColor: "rgba(255,255,255,0.15)", transition: { type: "spring", stiffness: 400 } }} whileTap={{ scale: 0.95 }}
-                                    href="#prosedur" className="w-full min-[420px]:w-auto px-4 py-2.5 md:px-8 md:py-4 bg-white/10 text-white font-bold rounded-[10px] md:rounded-xl border border-white/40 shadow-[0_4px_10px_rgba(0,0,0,0.1)] backdrop-blur-sm flex justify-center items-center"
+                                    href="#about" className="w-full min-[420px]:w-auto px-4 py-2.5 md:px-8 md:py-4 bg-white/10 text-white font-bold rounded-[10px] md:rounded-xl border border-white/40 shadow-[0_4px_10px_rgba(0,0,0,0.1)] backdrop-blur-sm flex justify-center items-center"
                                     style={{ fontSize: 'clamp(0.7rem, 1.5vw + 0.2rem, 1.125rem)' }}
                                 >
-                                    Baca Prosedur
+                                    Tentang Platform
                                 </motion.a>
                             </motion.div>
                         </div>
@@ -152,22 +144,68 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* MENGAPA SIKREDIT SECTION */}
-            <section className="pt-16 pb-40 md:pt-28 md:pb-64 bg-[#FAFAFA] overflow-hidden" id="prosedur">
-                <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-8">
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={ANIMATIONS.fadeUp} className="text-center mb-8 md:mb-16 px-4">
-                        <h2 className="text-2xl md:text-4xl font-extrabold text-[#152042] mb-3 md:mb-4 tracking-tight">Mengapa Memilih SiKredit?</h2>
-                        <div className="w-12 md:w-16 h-1 md:h-1.5 bg-[#FFC800] mx-auto rounded-full"></div>
+            {/* =====================================================================
+                SECTION: TENTANG KAMI / CORE VALUES (Desain Grid Responsif Proporsional)
+                ===================================================================== */}
+            <section className="pt-16 pb-28 md:pt-28 md:pb-40 bg-white overflow-hidden" id="about">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+
+                    {/* Header & Paragraf Pengantar */}
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={ANIMATIONS.fadeUp} className="text-center mb-10 md:mb-20">
+                        <h2 className="text-[18px] sm:text-2xl md:text-4xl font-extrabold text-[#0B1171] mb-2 md:mb-4 tracking-tight">Tentang SiKredit PPPK</h2>
+                        <div className="w-8 sm:w-12 md:w-16 h-[3px] md:h-1.5 bg-[#FFC800] mx-auto rounded-full mb-6 md:mb-12"></div>
+
+                        {/* Teks Pengantar dengan scaling responsive */}
+                        <div className="max-w-4xl mx-auto text-[#4B5563] text-[10px] sm:text-[13px] md:text-lg leading-relaxed md:leading-relaxed space-y-3 md:space-y-6 text-center px-2">
+                            <p>
+                                Di era mobilitas tinggi, waktu adalah aset berharga bagi para aparatur negara. <strong className="text-[#0B1171] font-bold">SiKredit PPPK</strong> hadir sebagai wujud nyata komitmen PT BPR Bank Karanganyar dalam memberikan layanan finansial yang memprioritaskan kemudahan, kecepatan, dan keamanan bagi para Pegawai Pemerintah dengan Perjanjian Kerja (PPPK).
+                            </p>
+                            <p>
+                                Platform digital ini dirancang untuk mendobrak batasan proses pengajuan kredit konvensional yang identik dengan tumpukan kertas dan antrean panjang. Dengan antarmuka yang sangat ramah pengguna (<i className="italic">user-friendly</i>) dan sistem yang terintegrasi penuh, SiKredit memberikan pengalaman perbankan kelas premium bagi setiap nasabahnya.
+                            </p>
+                        </div>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 md:gap-8 w-full max-w-6xl mx-auto px-4 sm:px-0">
-                        {FEATURES.map((feature, idx) => <TiltCard key={idx} feature={feature} idx={idx} />)}
+                    {/* Core Values Grid (Tetap 2 Kolom di Mobile, di-skala proporsional layaknya miniatur) */}
+                    <div className="max-w-5xl mx-auto">
+                        <motion.h3 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={ANIMATIONS.fadeUp} className="text-[14px] sm:text-xl md:text-2xl font-bold text-[#0B1171] text-center mb-6 md:mb-12">
+                            Nilai Utama <span className="text-[#FFC800]">(Core Values)</span> Platform Kami
+                        </motion.h3>
+
+                        {/* REVISI KUNCI: grid-cols-2 diterapkan secara paksa di semua ukuran layar */}
+                        <div className="grid grid-cols-2 gap-3 sm:gap-6 md:gap-8">
+                            {CORE_VALUES.map((value, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                                    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.1 } } }}
+                                    className="bg-[#FAFAFA] border border-gray-100 rounded-[12px] sm:rounded-2xl md:rounded-3xl p-3 sm:p-5 md:p-8 hover:bg-white hover:shadow-[0_8px_30px_rgba(11,17,113,0.06)] transition-all duration-300 group flex flex-col justify-start h-full"
+                                >
+                                    <div className="flex items-start gap-2 sm:gap-4 md:gap-5">
+                                        {/* Ikon Container (Skala Mengecil di HP) */}
+                                        <div className="w-6 h-6 sm:w-10 sm:h-10 md:w-14 md:h-14 rounded-[8px] sm:rounded-xl md:rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                            <div className="scale-[0.45] sm:scale-75 md:scale-100 flex items-center justify-center">
+                                                {value.icon}
+                                            </div>
+                                        </div>
+
+                                        {/* Teks Container (Skala Mengecil di HP) */}
+                                        <div>
+                                            <h4 className="text-[9px] sm:text-xs md:text-lg font-bold text-[#0B1171] leading-tight mb-0.5 sm:mb-1 md:mb-2">{value.title}</h4>
+                                            <span className="inline-block text-[6px] sm:text-[8px] md:text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1 sm:mb-2 md:mb-3">{value.subtitle}</span>
+                                            <p className="text-gray-500 text-[7px] sm:text-[10px] md:text-sm leading-[1.4] sm:leading-relaxed md:leading-relaxed">{value.desc}</p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
+
                 </div>
             </section>
 
             {/* CONTACT US SECTION */}
-            <section id="contact" className="w-full bg-[#152042] pt-16 pb-20 sm:py-24 px-4 sm:px-6 lg:px-8 border-t-4 border-[#FFC800] overflow-hidden">
+            <section id="contact" className="w-full bg-[#0B1171] pt-16 pb-20 sm:py-24 px-4 sm:px-6 lg:px-8 border-t-4 border-[#FFC800] overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={ANIMATIONS.fadeUp} className="text-center mb-12 sm:mb-16">
                         <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 tracking-tight">Hubungi Kami</h2>
@@ -179,7 +217,7 @@ export default function LandingPage() {
                             {CONTACT_INFO.map((item, i) => (
                                 <motion.div key={i} whileHover={{ x: 10, scale: 1.02, transition: { type: "spring", stiffness: 400 } }} className="flex items-start gap-4 sm:gap-5 group cursor-pointer">
                                     <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/10 group-hover:bg-[#FFC800] rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 border border-white/20">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-[#152042] transition-colors">{item.icon}</svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-[#0B1171] transition-colors">{item.icon}</svg>
                                     </div>
                                     <div className="pt-1">
                                         <h4 className="text-blue-300 font-bold mb-1 text-[11px] sm:text-xs uppercase tracking-widest">{item.title}</h4>
