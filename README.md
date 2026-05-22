@@ -1,66 +1,120 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Formulir P3K Client - Frontend Documentation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📖 Deskripsi Proyek
+**Formulir P3K Client** adalah aplikasi web frontend berbasis React yang digunakan sebagai antarmuka pengajuan kredit atau pendaftaran formulir secara digital. Aplikasi ini dirancang dengan antarmuka yang modern, dinamis, dan responsif, serta dilengkapi dengan fitur *multi-step form* untuk memudahkan pengguna dalam mengisi data secara bertahap.
 
-## About Laravel
+## 🚀 Teknologi Utama
+Proyek ini dibangun menggunakan teknologi dan pustaka modern berikut:
+- **Core:** [React 19](https://react.dev/) & [Vite 8](https://vitejs.dev/)
+- **Routing:** [React Router DOM](https://reactrouter.com/) (v7)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & PostCSS
+- **Form Handling:** [React Hook Form](https://react-hook-form.com/)
+- **State Management:** [Zustand](https://zustand-demo.pmnd.rs/) (Tersedia untuk global state)
+- **HTTP Client:** [Axios](https://axios-http.com/)
+- **Animations & UX:** [Framer Motion](https://www.framer.com/motion/) & [Lenis](https://lenis.studiofreight.com/) (Smooth Scrolling)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📂 Struktur Direktori
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Berikut adalah struktur utama dari direktori `src`:
 
-## Learning Laravel
+```text
+src/
+├── api/          # Konfigurasi endpoint API (misal: masterApi.js, pengajuanApi.js)
+├── assets/       # Aset statis seperti gambar, ikon, atau logo
+├── components/   # Komponen React yang dapat digunakan ulang (reusable)
+│   ├── layout/   # Komponen tata letak utama (Navbar, MainLayout, Footer)
+│   └── ui/       # Komponen antarmuka dasar (Preloader, CustomCursor)
+├── hooks/        # Custom React hooks
+├── layouts/      # Tata letak spesifik halaman
+├── lib/          # Konfigurasi library eksternal (misal: http.js untuk Axios)
+├── pages/        # Halaman utama aplikasi
+│   ├── LandingPage/ # Halaman beranda utama
+│   └── Pengajuan/   # Halaman multi-step form pengajuan
+├── services/     # Layanan eksternal atau logika bisnis yang diabstraksi
+├── store/        # Konfigurasi global state (Zustand)
+├── utils/        # Fungsi utilitas / helper
+├── index.css     # Entry point untuk Tailwind CSS dan styling global
+├── routes.jsx    # Konfigurasi React Router DOM
+└── main.jsx      # Entry point aplikasi React
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🗺️ Routing & Navigasi
+Aplikasi menggunakan **React Router DOM** dengan fungsi `createBrowserRouter` yang dikonfigurasi pada `src/routes.jsx`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Rute Utama:**
+- `/` - **Landing Page** (`<LandingPage />`): Halaman awal informasi layanan.
+- `/pengajuan` - **Form Pengajuan** (`<FormPengajuan />`): Halaman utama untuk memulai proses pengajuan formulir.
 
-## Laravel Sponsors
+Kedua rute ini dibungkus dalam `<MainLayout />` yang menyediakan Navbar dan elemen global lainnya.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+---
 
-### Premium Partners
+## 📝 Form Pengajuan (Multi-Step Form)
+Fitur utama dari aplikasi ini adalah halaman `/pengajuan` yang memiliki alur formulir bertahap. Proses ini dikelola di dalam direktori `src/pages/Pengajuan/steps/`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+**Langkah-langkah Formulir:**
+1. **Step 1: Data Diri** (`Step1DataDiri.jsx`) - Input identitas dasar (Nama, NIK 16 digit, Alamat, dll).
+2. **Step 2: Data Suami/Istri** (`Step2DataSuamiIstri.jsx`) - Informasi pasangan (jika menikah).
+3. **Step 3: Data Orang Terdekat** (`Step3DataOrangTerdekat.jsx`) - Penjamin atau kerabat yang bisa dihubungi (Wajib NIK 16 digit).
+4. **Step 4: Data Pegawai & Pendapatan** (`Step4DataPegawaiPendapatan.jsx`) - Informasi pekerjaan, instansi, dan penghasilan.
+5. **Step 5: Pengajuan Kredit** (`Step5PengajuanKredit.jsx`) - Detail nominal dan tujuan kredit.
+6. **Step 6: Upload Berkas** (`Step6UploadBerkas.jsx`) - Unggah dokumen persyaratan (KTP, KK, Surat Nikah, Ijazah, SK, NPWP) dengan batas ukuran maksimal 5MB. Terdapat juga pencetakan dokumen seperti `TemplateCetakF4.jsx`.
 
-## Contributing
+*Catatan: Form ini memiliki validasi client-side yang ketat untuk NIK (harus 16 digit) dan batasan ukuran file sebelum dikirim ke API.*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🔌 API & HTTP Requests
+Semua permintaan API dikelola melalui modul yang terpusat di `src/api/` dan menggunakan instance Axios dari `src/lib/http.js`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **`pengajuanApi.js`**: Mengelola pembentukan payload data pengajuan (menggunakan `FormData` untuk mendukung unggah file) dan mengirimkannya ke endpoint `/pengajuan/createPengajuan`. Terdapat fungsi helper seperti `buildPengajuanFormData` untuk memetakan nama label ke ID database dan memvalidasi file unggahan.
+- **`masterApi.js`**: Menangani permintaan data referensi (master data) yang dibutuhkan oleh dropdown formulir.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🎨 Styling & Animasi
+- **Tailwind CSS**: Digunakan sebagai framework utama untuk utilitas kelas CSS. Konfigurasi dapat disesuaikan di `tailwind.config.js`.
+- **Framer Motion**: Digunakan untuk membuat transisi antar halaman atau antar langkah pada *multi-step form* agar terasa mulus dan profesional.
+- **Lenis**: Digunakan untuk efek *smooth scrolling* di keseluruhan aplikasi untuk meningkatkan *User Experience*.
+- **Kustomisasi UI**: Beberapa komponen antarmuka yang dibuat khusus berada di `src/components/ui/` seperti `CustomCursor.jsx` dan `Preloader.jsx`.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## ⚙️ Pengembangan & Perintah (Scripts)
+
+Untuk menjalankan proyek ini di lingkungan lokal, pastikan Anda telah menginstal Node.js dan NPM.
+
+1. **Install Dependensi:**
+   ```bash
+   npm install
+   ```
+
+2. **Jalankan Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Aplikasi akan berjalan di local environment (misal `http://localhost:5173`).
+
+3. **Build untuk Production:**
+   ```bash
+   npm run build
+   ```
+   Akan menghasilkan direktori `dist` yang siap untuk dideploy.
+
+---
+
+## 🛠️ Panduan Maintenance & Pengembangan
+1. **Menambah Langkah Form (Step) Baru:**
+   - Buat komponen baru di `src/pages/Pengajuan/steps/`.
+   - Daftarkan komponen tersebut pada *state manager* atau *wizard controller* yang ada di `FormPengajuan.jsx`.
+   - Update fungsi `buildPengajuanFormData` di `pengajuanApi.js` untuk mengakomodasi payload pengiriman ke server.
+2. **Validasi Form:**
+   Gunakan kapabilitas dari `react-hook-form` di masing-masing komponen form (step). Untuk validasi file yang lebih spesifik, gunakan custom function `validateFile` yang tersedia.
+3. **Pengaturan Layout/Desain:**
+   Jika ingin mengubah desain komponen pembungkus (Navbar, Footer, dsb), ubah komponen di `src/components/layout/`. Sesuaikan dengan *styling* Tailwind yang sudah terkonfigurasi.
+4. **Penambahan Fitur Rute Baru:**
+   Buat folder/file baru di dalam `src/pages/`, lalu lakukan pendaftaran pada `src/routes.jsx` agar bisa diakses oleh *user*.
