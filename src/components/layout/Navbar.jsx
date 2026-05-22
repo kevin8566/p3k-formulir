@@ -43,9 +43,12 @@ export default function Navbar() {
                         <Link to="/" onClick={handleHomeClick} className="text-[13px] lg:text-[14px] font-semibold text-white/80 hover:text-white uppercase tracking-widest transition-colors duration-200">
                             Home
                         </Link>
-                        <a href="/#prosedur" className="text-[13px] lg:text-[14px] font-semibold text-white/80 hover:text-white uppercase tracking-widest transition-colors duration-200">
-                            Prosedur
+
+                        {/* REVISI: Mengubah 'Prosedur' menjadi 'About' dan mengarah ke id #about */}
+                        <a href="/#about" className="text-[13px] lg:text-[14px] font-semibold text-white/80 hover:text-white uppercase tracking-widest transition-colors duration-200">
+                            About
                         </a>
+
                         <a href="/#contact" className="text-[13px] lg:text-[14px] font-semibold text-white/80 hover:text-white uppercase tracking-widest transition-colors duration-200">
                             Contact Us
                         </a>
@@ -71,7 +74,10 @@ export default function Navbar() {
                 <div className="md:hidden absolute w-full bg-[#122B88] shadow-2xl border-t border-white/5">
                     <div className="px-5 py-5 flex flex-col space-y-1">
                         <Link to="/" onClick={handleHomeClick} className="block px-4 py-3.5 rounded-lg text-sm font-semibold tracking-widest text-white/90 hover:text-white hover:bg-white/5 transition-all uppercase">Home</Link>
-                        <a href="/#prosedur" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3.5 rounded-lg text-sm font-semibold tracking-widest text-white/90 hover:text-white hover:bg-white/5 transition-all uppercase">Prosedur</a>
+
+                        {/* REVISI MOBILE MENU: Mengubah 'Prosedur' menjadi 'About' dan mengarah ke id #about */}
+                        <a href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3.5 rounded-lg text-sm font-semibold tracking-widest text-white/90 hover:text-white hover:bg-white/5 transition-all uppercase">About</a>
+
                         <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3.5 rounded-lg text-sm font-semibold tracking-widest text-white/90 hover:text-white hover:bg-white/5 transition-all uppercase">Contact Us</a>
                         <a href="/pengajuan" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-3.5 rounded-lg text-sm font-semibold tracking-widest text-[#FFC800] hover:bg-white/5 transition-all uppercase">Ajukan</a>
                     </div>
