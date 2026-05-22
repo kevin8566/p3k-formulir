@@ -47,8 +47,13 @@ export default function TemplateCetakF4({ formData }) {
                         font-variant-numeric: tabular-nums !important;
                     }
 
-                    /* Menyembunyikan Navbar, Header, dan Footer bawaan website saat cetak */
-                    nav, header, footer { display: none !important; }
+                    /* =========================================================================
+                       REVISI: Menyembunyikan Navbar, Header, Footer, Animasi Scroll Kuning,
+                       dan semua elemen yang melayang (fixed/sticky) bawaan website saat cetak.
+                       ========================================================================= */
+                    nav, header, footer, .fixed, .sticky, [style*="position: fixed"], [style*="position: sticky"] {
+                        display: none !important;
+                    }
 
                     .page-break { page-break-before: always; }
 
@@ -257,7 +262,6 @@ export default function TemplateCetakF4({ formData }) {
                 <p className="mb-2 font-bold italic text-justify">Melakukan Analisa SLIK (Sistem Layanan Informasi Keuangan) atas data/identitas kami,</p>
                 <p className="mb-8 text-justify">Sehubungan dengan pengajuan kredit kami pada Bank tersebut.</p>
 
-                {/* REVISI: Menggunakan table untuk "Atas Nama" dan "Pada Tanggal" agar presisi 100% dan tidak meloncat */}
                 <table className="w-full mb-8 border-separate border-spacing-y-2">
                     <tbody>
                         <tr>
