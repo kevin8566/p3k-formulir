@@ -13,7 +13,7 @@ const PAGE_TITLES = {
 
 export default function AdminTopbar() {
     const location = useLocation();
-    const { globalSearch, setGlobalSearch } = useUIStore();
+    const { globalSearch, setGlobalSearch, setSidebarOpen } = useUIStore();
 
     const pageTitle = Object.entries(PAGE_TITLES)
         .sort((a, b) => b[0].length - a[0].length)
@@ -23,7 +23,11 @@ export default function AdminTopbar() {
         <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 shrink-0 z-10">
             <div className="flex items-center gap-8 flex-1">
                 {/* Menu Toggle (Mobile) */}
-                <button className="lg:hidden p-2 hover:bg-gray-50 rounded-lg">
+                <button
+                    className="md:hidden p-2 hover:bg-gray-50 rounded-lg"
+                    onClick={() => setSidebarOpen(true)}
+                    aria-label="Buka menu sidebar"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
