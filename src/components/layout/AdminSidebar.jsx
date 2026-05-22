@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUIStore } from '../../store/uiStore';
 import { Link, useLocation } from 'react-router-dom';
 import { useMasterDataStore } from '../../features/master-data/store/masterDataStore';
 
@@ -6,6 +7,7 @@ export default function AdminSidebar() {
     const location = useLocation();
     const { categories } = useMasterDataStore();
     const [isMasterOpen, setIsMasterOpen] = useState(location.pathname.includes('master-data'));
+    const { sidebarOpen, setSidebarOpen } = useUIStore();
 
     const NAV_ITEMS = [
         {
@@ -61,8 +63,33 @@ export default function AdminSidebar() {
         return location.pathname.startsWith(to);
     };
 
+    // Sidebar desktop: md:block, mobile: fixed overlay
     return (
-        <aside className="w-[280px] bg-[#0B1121] text-white flex flex-col shadow-2xl z-20 shrink-0 border-r border-white/5 relative overflow-hidden">
+        <>
+        {/* Overlay for mobile */}
+        {sidebarOpen && (
+            <div
+                className="fixed inset-0 bg-black/40 z-40 md:hidden animate-fade-in"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Tutup menu sidebar"
+            />
+        )}
+        <aside
+            className={`w-[280px] bg-[#0B1121] text-white flex flex-col shadow-2xl z-50 shrink-0 border-r border-white/5 overflow-hidden hidden md:flex ${
+                sidebarOpen ? '!flex fixed md:static left-0 top-0 h-screen md:h-auto md:relative' : ''
+            }`}
+        >
+            {/* Close button mobile */}
+            <button
+                className="absolute top-4 right-4 md:hidden bg-white/10 hover:bg-white/20 rounded-lg p-2 z-50"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Tutup sidebar"
+                style={{ display: sidebarOpen ? 'block' : 'none' }}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
             {/* Brand */}
             <div className="h-28 flex items-center px-10 shrink-0 relative z-10">
                 <div className="flex items-center gap-4">
@@ -150,7 +177,8 @@ export default function AdminSidebar() {
                     })}
                 </nav>
 
-               <p className="px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mt-10 mb-6 opacity-50">Pengaturan</p>
+
+              
                     <Link
                         to="/login"                   
                         onClick={() => {
@@ -168,5 +196,6 @@ export default function AdminSidebar() {
 
             <div className="h-10 shrink-0" />
         </aside>
+        </>
     );
 }

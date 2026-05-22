@@ -7,7 +7,6 @@ export const RECENT_PENGAJUAN = [
 ];
 
 export const QUICK_LINKS = [
-    { label: 'Kreditur', desc: 'Lihat semua data kreditur', icon: 'users', color: '#6366f1', badge: null, path: '/admin/kreditur' },
     { label: 'Master Data', desc: 'Kelola data master dropdown', icon: 'database', color: '#f59e0b', badge: null, path: '/admin/master-data' },
     { label: 'Pengajuan', desc: 'Proses pengajuan baru', icon: 'clipboard', color: '#10b981', badge: 'Soon', path: '/admin/pengajuan' },
     { label: 'Pengaturan', desc: 'Pengaturan sistem', icon: 'settings', color: '#8b5cf6', badge: null, path: '/admin/pengaturan' },
