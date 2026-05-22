@@ -66,9 +66,6 @@ export default function TemplateCetakF4({ formData }) {
                 ======================================================================= */}
             <div className="w-full relative pt-1">
 
-                {/* =====================================================================
-                    REVISI: Memperbesar logo (h-10) dan menyesuaikan padding banner (py-1.5)
-                    ===================================================================== */}
                 <div className="flex bg-[#CC0000] text-white py-1.5 px-3 items-center justify-between mb-4">
                     <div className="w-[40%] flex items-center">
                         <img src="/images/f-logo.png" alt="Logo Bank Karanganyar" className="h-10 object-contain" />
@@ -247,7 +244,7 @@ export default function TemplateCetakF4({ formData }) {
                         {/* PENJAMIN */}
                         <tr><td>3.</td><td>Nama</td><td>:</td><td className="garis-bawah font-bold uppercase">{formData.nama_kerabat || '\u00A0'}</td><td className="italic text-right">( Penjamin )</td></tr>
                         <tr><td></td><td>Alamat</td><td>:</td><td colSpan="2" className="garis-bawah uppercase">{formData.alamat_kerabat || '\u00A0'}</td></tr>
-                        <tr><td className="pb-3"></td><td className="pb-3">Nomor KTP</td><td className="pb-3">:</td><td colSpan="2" className="pb-3 garis-bawah uppercase">&nbsp;</td></tr>
+                        <tr><td className="pb-3"></td><td className="pb-3">Nomor KTP</td><td className="pb-3">:</td><td colSpan="2" className="pb-3 garis-bawah uppercase">{formData.nik_kerabat || '\u00A0'}</td></tr>
 
                         {/* PASANGAN PENJAMIN */}
                         <tr><td>4.</td><td>Nama</td><td>:</td><td className="garis-bawah">&nbsp;</td><td className="italic text-right">( Istri/Suami Penjamin )</td></tr>
@@ -260,20 +257,21 @@ export default function TemplateCetakF4({ formData }) {
                 <p className="mb-2 font-bold italic text-justify">Melakukan Analisa SLIK (Sistem Layanan Informasi Keuangan) atas data/identitas kami,</p>
                 <p className="mb-8 text-justify">Sehubungan dengan pengajuan kredit kami pada Bank tersebut.</p>
 
-                <div className="flex mb-8">
-                    <div className="w-[15%]">
-                        <p className="mb-1">Atas Nama</p>
-                        <p>Pada tanggal</p>
-                    </div>
-                    <div className="w-[2%]">
-                        <p className="mb-1">:</p>
-                        <p>:</p>
-                    </div>
-                    <div className="w-[83%]">
-                        <p className="uppercase font-bold mb-1 garis-bawah inline-block min-w-[300px]">{formData.nama || '\u00A0'}</p>
-                        <p className="garis-bawah inline-block min-w-[300px]">{getTanggalSekarang()}</p>
-                    </div>
-                </div>
+                {/* REVISI: Menggunakan table untuk "Atas Nama" dan "Pada Tanggal" agar presisi 100% dan tidak meloncat */}
+                <table className="w-full mb-8 border-separate border-spacing-y-2">
+                    <tbody>
+                        <tr>
+                            <td className="w-[15%]">Atas Nama</td>
+                            <td className="w-[2%]">:</td>
+                            <td className="w-[83%] uppercase font-bold garis-bawah">{formData.nama || '\u00A0'}</td>
+                        </tr>
+                        <tr>
+                            <td>Pada tanggal</td>
+                            <td>:</td>
+                            <td className="garis-bawah">{getTanggalSekarang()}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <p className="mb-8">Demikian pernyataan ini kami buat untuk dapat dipergunakan sebagaimana mestinya.</p>
 
@@ -282,9 +280,7 @@ export default function TemplateCetakF4({ formData }) {
                     <p className="mb-2">Yang membuat pernyataan</p>
                 </div>
 
-                {/* =======================================================================
-                    LOGIKA DINAMIS KOLOM TANDA TANGAN (KOTAK BAWAH)
-                    ======================================================================= */}
+                {/* LOGIKA DINAMIS KOLOM TANDA TANGAN (KOTAK BAWAH) */}
                 <table className="avoid-break w-full border-collapse border border-black h-28">
                     <tbody>
                         <tr>

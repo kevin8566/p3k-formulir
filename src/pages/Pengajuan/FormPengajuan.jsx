@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Penyesuaian struktur impor komponen yang telah digabung dan diubah namanya
@@ -77,10 +77,20 @@ const INITIAL_FORM_DATA = {
 };
 
 export default function FormPengajuan() {
-    const [step, setStep] = useState(1);
+    // LAZY INITIALIZATION: Baca memori browser saat halaman direload
+    const [step, setStep] = useState(() => {
+        const savedStep = localStorage.getItem('sikredit_step');
+        return savedStep ? JSON.parse(savedStep) : 1;
+    });
+
     const [direction, setDirection] = useState(1);
     const [isSuccess, setIsSuccess] = useState(false);
-    const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+    // LAZY INITIALIZATION: Baca data form yang tersimpan
+    const [formData, setFormData] = useState(() => {
+        const savedData = localStorage.getItem('sikredit_form_data');
+        return savedData ? JSON.parse(savedData) : INITIAL_FORM_DATA;
+    });
 
     const {
         submitPengajuan,
@@ -88,11 +98,51 @@ export default function FormPengajuan() {
         error: submitError,
     } = usePengajuan();
 
+    // AUTO-SAVE: Otomatis simpan ke LocalStorage setiap kali ada ketikan/perubahan
+    useEffect(() => {
+        localStorage.setItem('sikredit_form_data', JSON.stringify(formData));
+    }, [formData]);
+
+    useEffect(() => {
+        localStorage.setItem('sikredit_step', JSON.stringify(step));
+    }, [step]);
+
+    // =======================================================================
+    // PERUBAHAN BARU: Fungsi Cetak Interseptor Nama PDF Dinamis
+    // =======================================================================
+    const handleCetakPDF = () => {
+        // 1. Simpan judul tab browser asli saat ini
+        const originalTitle = document.title;
+
+        // 2. Bersihkan karakter aneh pada nama pemohon jika ada (hilangkan spasi ganda)
+        const namaPemohon = formData.nama ? formData.nama.replace(/[^a-zA-Z0-9\s]/g, "").trim() : "";
+
+        // 3. Set properti document.title secara dinamis sesuai nama nasabah
+        if (namaPemohon) {
+            document.title = `SiKredit PPPK - PT BPR Bank Karanganyar - ${namaPemohon}`;
+        } else {
+            document.title = `SiKredit PPPK - PT BPR Bank Karanganyar`;
+        }
+
+        // 4. Panggil jendela cetak browser
+        window.print();
+
+        // 5. Kembalikan judul tab browser asli setelah jendela cetak dirender
+        setTimeout(() => {
+            document.title = originalTitle;
+        }, 1500);
+    };
+
     const handleNext = async () => {
         if (step === 6) {
             try {
                 await submitPengajuan(formData);
                 setIsSuccess(true);
+
+                // CLEANUP: Hapus draft jika data sukses masuk ke database
+                localStorage.removeItem('sikredit_form_data');
+                localStorage.removeItem('sikredit_step');
+
                 window.scrollTo({ top: 0, behavior: "smooth" });
             } catch (error) {
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -230,8 +280,9 @@ export default function FormPengajuan() {
                                         }}
                                         className="flex flex-col sm:flex-row gap-4"
                                     >
+                                        {/* REVISI: onClick sekarang mengarah ke fungsi handleCetakPDF */}
                                         <button
-                                            onClick={() => window.print()}
+                                            onClick={handleCetakPDF}
                                             className="px-8 py-4 bg-[#FFC800] text-[#152042] rounded-xl font-bold uppercase tracking-widest shadow-xl shadow-yellow-500/20 hover:bg-yellow-400 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
                                         >
                                             <svg

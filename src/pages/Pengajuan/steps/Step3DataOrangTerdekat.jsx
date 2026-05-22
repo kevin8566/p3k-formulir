@@ -40,7 +40,7 @@ export default function Step3DataOrangTerdekat({ formData, setFormData }) {
                         value={formData.nik_kerabat || ""}
                         onChange={handleChange}
                         required
-                        placeholder="16 Digit Angka NIK"
+                        placeholder=""
                         inputMode="numeric"
                         maxLength={16}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FFC800] focus:border-[#FFC800] outline-none transition-all"
