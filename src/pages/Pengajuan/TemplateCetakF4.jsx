@@ -178,17 +178,17 @@ export default function TemplateCetakF4({ formData }) {
                     </div>
                 </div>
 
-                {/* TATA LETAK TANDA TANGAN 2 */}
+                {/* REVISI: TATA LETAK TANDA TANGAN 2 (Dikosongkan untuk diisi manual) */}
                 <div className="avoid-break flex justify-between text-center mb-6">
                     <div className="w-1/3 flex flex-col justify-between items-center">
                         <div className="leading-tight">
                             <p>Menyetujui,</p>
-                            <p>Plh. KEPALA DINAS / INSTANSI</p>
+                            <p>KEPALA DINAS / INSTANSI</p>
                         </div>
                         <div className="h-16"></div>
                         <div>
-                            <p className="underline leading-tight">drg. Dwi Rusharyati, M.H</p>
-                            <p className="leading-tight mt-1">NIP/NRP/NIK : 197302142000122005</p>
+                            <p className="leading-tight font-bold underline">...........................................</p>
+                            <p className="leading-tight mt-1">NIP/NRP/NIK : .........................</p>
                         </div>
                     </div>
                     <div className="w-1/3"></div>
@@ -198,8 +198,8 @@ export default function TemplateCetakF4({ formData }) {
                         </div>
                         <div className="h-16"></div>
                         <div>
-                            <p className="underline leading-tight">Sugeng Riyadi</p>
-                            <p className="leading-tight mt-1">NIP/NRP/NIK : 197604222007011006</p>
+                            <p className="leading-tight font-bold underline">...........................................</p>
+                            <p className="leading-tight mt-1">NIP/NRP/NIK : .........................</p>
                         </div>
                     </div>
                 </div>
